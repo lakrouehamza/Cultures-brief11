@@ -7,6 +7,7 @@ class Connect{
         $conn = new  PDO ("mysql:host=localhost;dbname=cultures",'root',"12345");
             if(!$conn)
                 throw new ExceptionConnect("le base de donnee ne existe pas !! ");
+        $this->conn= $conn;
         }catch(ExceptionConnect $e){
                 echo $e->getMessage();
         }
@@ -14,5 +15,6 @@ class Connect{
     public function getConnect(){
         return $this->conn;
     }
-}
+};
+
 ?>

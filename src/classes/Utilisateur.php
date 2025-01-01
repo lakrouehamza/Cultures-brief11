@@ -1,4 +1,5 @@
 <?php
+require_once("Connect.php");
 class Utilisateur{
     protected ?int $id;
     protected ?String $email;
@@ -6,7 +7,7 @@ class Utilisateur{
     protected ?String $prenom;
     protected ?String $password;
     protected ?String $role;
-    public function __construct($id='',$email='',$nom='',$prenom='',$password='',$role="member")
+    public function __construct($id=0,$email='',$nom='',$prenom='',$password='',$role="member")
     {
         $this->id=$id;
         $this->email=$email;
@@ -81,8 +82,9 @@ class Utilisateur{
 
     public function signUp(){
         $connect = new Connect();
-        $stmt = $connect->getConnect()->prepare("SELECT * FROM utilisateurs WHERE email = :email");
-        $stmt->bindParam(":email",$this->email);
+        $stmt = $connect->getConnect()->prepare("select *  from  utilisateur where email = :email");
+        $email = $this->getEmail();
+        $stmt->bindParam(":email",$email);
         $stmt->execute();
         if(!($row = $stmt->fetch(PDO::FETCH_ASSOC))){
             $nom = $this->getNom();
@@ -90,12 +92,12 @@ class Utilisateur{
             $email = $this->getEmail();
             $role = $this->getRole();
             $password = $this->getPassword();
-            $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,role,password) values (:nom,:prenom,:email,:role,:password)");
+            $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,password,role) values (:nom,:prenom,:email,:password,:role)");
             $stmt->bindParam(":nom", $nom);
             $stmt->bindParam(":prenom", $prenom);
             $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":role", $role);
             $stmt->bindParam(":password", $password);
+            $stmt->bindParam(":role", $role);
             $stmt->execute();
         }
     }

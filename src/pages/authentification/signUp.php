@@ -1,3 +1,19 @@
+<?php 
+require_once("../../classes/Utilisateur.php");
+if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['password'])&& isset($_POST['verifyPassword']) && isset($_POST['role'])){
+   $user = new Utilisateur();
+   $user->setNom(htmlspecialchars($_POST['nom'],ENT_COMPAT)); 
+   $user->setPrenom(htmlspecialchars($_POST['prenom'],ENT_COMPAT)); 
+   $user->setRole(htmlspecialchars($_POST['role'],ENT_COMPAT)); 
+   $user->setEmail(htmlspecialchars($_POST['email'],ENT_COMPAT)); 
+   $user->setPassword(htmlspecialchars($_POST['password'],ENT_COMPAT)); 
+   if($user->signUp() && $user->getPassword() == htmlspecialchars($_POST['verifyPassword'],ENT_COMPAT)){
+    header('login.php');
+    exit;
+   }
+}
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,7 +47,7 @@
           <h1 class="pt-8 pb-6 font-bold text-5xl dark:text-gray-400 text-center cursor-default">
             SIGN UP
           </h1>
-          <form action="" method="post" class="space-y-4">
+          <form action="" method="POST" class="space-y-4">
             <div>
               <label for="nom" class="mb-2 dark:text-gray-400 text-lg">nom</label>
               <input
@@ -98,16 +114,16 @@
                 required >
                 <option value="">Sélectionnez un rôle</option>
                 <option value="auteur">Auteur</option>
-                <option value="member">Member</option>
+                <option value="membre">Member</option>
               </select>
             </div>
-            <button
+            <input
             name="signup"
               class="bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
               type="submit"
-            >
-            Sign Up
-            </button>
+              value="Sign Up"
+            />
+            
           </form>
           <div class="flex flex-col mt-4 items-center justify-center text-sm">
             <h3>
