@@ -1,3 +1,14 @@
+<?php 
+require_once("../../assets/functions/authentification.php");
+authentification();
+require_once("../../classes/Utilisateur.php");
+if(isset($_POST['email']) && isset($_POST['password'])){
+    $user =  new Utilisateur();
+    $user->setEmail(htmlspecialchars($_POST['email'],ENT_COMPAT));
+    $user->setPassword(htmlspecialchars($_POST['password'],ENT_COMPAT));
+    $user->login();
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>

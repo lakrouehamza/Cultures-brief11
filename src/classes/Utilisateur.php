@@ -53,12 +53,15 @@ class Utilisateur{
         return $this->role;
     }
     public function setSession(){
-
+    session_start();
+    $_SESSION['email']  = $this->getEmail();
+    $_SESSION['role']  = $this->getRole();
     }
     public function login(){
         $connect = new Connect();
-        $stmt = $connect->getConnect()->prepare("SELECT * FROM utilisateurs WHERE email = :email");
-        $stmt->bindParam(":email",$this->email);
+        $stmt = $connect->getConnect()->prepare("select * from utilisateur  where email = :email");
+        $email = $this->getEmail();
+        $stmt->bindParam(":email",$email);
         $stmt->execute();
         if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             if (password_verify($this->getPassword(), $row['password'])) {
@@ -69,15 +72,15 @@ class Utilisateur{
                     exit;
                 }
                 elseif($row['role']=="membre"){
-                    header('Location: ../memnerPages/home.php');
+                    header('Location: ../memberPages/home.php');
                     exit;
                 }
                 elseif($row['role']=="auteur"){
                     header('Location: ../auteurPages/home.php');
                     exit;
-                }
-            }
-        }
+                }else echo "in role";
+            }else echo "in password";
+        }else echo "in email";
     }
 
     public function signUp(){
@@ -92,6 +95,7 @@ class Utilisateur{
             $email = $this->getEmail();
             $role = $this->getRole();
             $password = $this->getPassword();
+            $password = password_hash($password, PASSWORD_BCRYPT);
             $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,password,role) values (:nom,:prenom,:email,:password,:role)");
             $stmt->bindParam(":nom", $nom);
             $stmt->bindParam(":prenom", $prenom);
@@ -99,6 +103,8 @@ class Utilisateur{
             $stmt->bindParam(":password", $password);
             $stmt->bindParam(":role", $role);
             $stmt->execute();
+            header("login.php");
+            exit;
         }
     }
 };

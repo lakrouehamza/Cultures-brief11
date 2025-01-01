@@ -1,4 +1,6 @@
 <?php 
+require_once("../../assets/functions/authentification.php");
+authentification();
 require_once("../../classes/Utilisateur.php");
 if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['password'])&& isset($_POST['verifyPassword']) && isset($_POST['role'])){
    $user = new Utilisateur();
