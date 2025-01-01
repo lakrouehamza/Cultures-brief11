@@ -12,6 +12,10 @@ class Connect{
                 echo $e->getMessage();
         }
     }
+    public function __destruct()
+    {
+        $this->conn = null;
+    }
     public function getConnect(){
         return $this->conn;
     }
