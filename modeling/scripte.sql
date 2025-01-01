@@ -50,8 +50,8 @@ create  table leslikes (
     constraint FK_AuteurLik foreign key (membre) references Members (id) on delete cascade on update cascade
  );
  create  table lesviews(
-    id int primary key auto_increment,
-    article int not null,
+    article int primary key,
+    nombre int not null default 0,
     constraint FK_Articlewies foreign key (article) references Article(id) on delete cascade on update cascade
  ); 
 create table lescommits(
@@ -79,7 +79,15 @@ end if;
 end; //
 DELIMITER ;
 
-
+delimiter//
+create trigger insertViews
+after insert on Article 
+for each row
+begin
+insert into lesviews values(new.id,0);
+end ;
+//
+delimiter ;
 
 ​
 
