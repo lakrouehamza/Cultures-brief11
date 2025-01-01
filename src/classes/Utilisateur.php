@@ -55,7 +55,7 @@ class Utilisateur{
 
     }
     public function login(){
-        $connect = new Connect("localhost","root","12345");
+        $connect = new Connect();
         $stmt = $connect->getConnect()->prepare("SELECT * FROM utilisateurs WHERE email = :email");
         $stmt->bindParam(":email",$this->email);
         $stmt->execute();
@@ -80,7 +80,24 @@ class Utilisateur{
     }
 
     public function signUp(){
-
+        $connect = new Connect();
+        $stmt = $connect->getConnect()->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $stmt->bindParam(":email",$this->email);
+        $stmt->execute();
+        if(!($row = $stmt->fetch(PDO::FETCH_ASSOC))){
+            $nom = $this->getNom();
+            $prenom = $this->getPrenom();
+            $email = $this->getEmail();
+            $role = $this->getRole();
+            $password = $this->getPassword();
+            $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,role,password) values (:nom,:prenom,:email,:role,:password)");
+            $stmt->bindParam(":nom", $nom);
+            $stmt->bindParam(":prenom", $prenom);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":role", $role);
+            $stmt->bindParam(":password", $password);
+            $stmt->execute();
+        }
     }
 };
 ?>
