@@ -51,11 +51,36 @@ class Utilisateur{
     public function getRole(){
         return $this->role;
     }
-    public function loign(){
-        
+    public function setSession(){
+
     }
+    public function login(){
+        $connect = new Connect("localhost","root","12345");
+        $stmt = $connect->getConnect()->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $stmt->bindParam(":email",$this->email);
+        $stmt->execute();
+        if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if (password_verify($this->getPassword(), $row['password'])) {
+                $this->setRole($row['role']);
+                $this->setSession();
+                if($row['role']=="admin"){
+                    header('Location: ../adminPages/home.php');
+                    exit;
+                }
+                elseif($row['role']=="membre"){
+                    header('Location: ../memnerPages/home.php');
+                    exit;
+                }
+                elseif($row['role']=="auteur"){
+                    header('Location: ../auteurPages/home.php');
+                    exit;
+                }
+            }
+        }
+    }
+
     public function signUp(){
-        
+
     }
 };
 ?>
