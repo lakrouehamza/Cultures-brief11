@@ -107,7 +107,7 @@ class Utilisateur{
             $stmt->bindParam(":password", $password);
             $stmt->bindParam(":role", $role);
             $stmt->execute();
-            header("login.php");
+            header("Location: login.php");
             exit;
         }
     }

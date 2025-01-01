@@ -13,9 +13,14 @@ require_once('header.php');
 if(isset($_POST['logout'])){
     $auteur->logout();
 }
+if(isset($_POST['containe']) && isset($_POST['title'])){
+    
+}
 ?>
    
-
+<?php
+require_once('./popapAjouteArticle.php');
+?>
    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-10">
             <!-- CARD 1 -->
             <div class="rounded overflow-hidden shadow-lg flex flex-col">
@@ -120,5 +125,6 @@ if(isset($_POST['logout'])){
 <?php 
 require_once("./../generalPages/footer.php")
 ?>
+<script src="./../../../src/assets/js/scriptPageAuteur.js"></script>
 </body>
 </html>
