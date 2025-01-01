@@ -9,9 +9,9 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
    $user->setRole(htmlspecialchars($_POST['role'],ENT_COMPAT)); 
    $user->setEmail(htmlspecialchars($_POST['email'],ENT_COMPAT)); 
    $user->setPassword(htmlspecialchars($_POST['password'],ENT_COMPAT)); 
-   if($user->signUp() && $user->getPassword() == htmlspecialchars($_POST['verifyPassword'],ENT_COMPAT)){
-    header('login.php');
-    exit;
+   if($user->getPassword() == htmlspecialchars($_POST['verifyPassword'],ENT_COMPAT)){
+    $user->signUp();
+   
    }
 }
 ?>
