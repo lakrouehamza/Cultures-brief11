@@ -99,3 +99,11 @@ return total;
 end;
 //
 DELIMITER ;
+
+DELIMITER //
+create   procedure  lesauteursActifs(in limitauteur int ) 
+begin 
+select * from utilisateur u  , Article ar  where   u.id =ar.auteur  group by ar.id order by count(ar.id)   limit limitauteur;
+end ;
+//
+DELIMITER;
