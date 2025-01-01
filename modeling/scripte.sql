@@ -33,7 +33,7 @@ create table Categorie (
     constraint FK_adminCtgr  foreign  key (admin) references  Admin(id) on delete cascade on update cascade
 );
 create table Article (
-    id int premary key auto_increment ,
+    id int primary key auto_increment ,
     statut enum('confirme','annule','encours'),
     auteur int not null,
     titre varchar(100) not null,
@@ -43,14 +43,14 @@ create table Article (
     constraint FK_typeArticle foreign key (categor) references Categorie(id) on delete cascade on update cascade
 );
 create  table leslikes (
-    id int premary key auto_increment,
+    id int primary key auto_increment,
     membre int not null,
     article int not null,
     constraint FK_ArticleLik foreign key (article) references Article(id) on delete cascade on update cascade,
-    constraint FK_AuteurLik foreign key (membre) references Members (id) on delete cascade on update cascade,
+    constraint FK_AuteurLik foreign key (membre) references Members (id) on delete cascade on update cascade
  );
  create  table lesviews(
-    id int premary key auto_increment,
+    id int primary key auto_increment,
     article int not null,
     constraint FK_Articlewies foreign key (article) references Article(id) on delete cascade on update cascade
  ); 
@@ -76,7 +76,26 @@ insert into Auteur values (new.id);
 else 
 insert into Members values (new.id);
 end if;
-end //
+end; //
 DELIMITER ;
 
 
+
+​
+
+-- Script Sql:
+-- Trouver le nombre total d'articles publiés par catégorie.
+-- Identifier les auteurs les plus actifs en fonction du nombre d'articles publiés.
+-- Calculer la moyenne d'articles publiés par catégorie.
+-- Créer une vue affichant les derniers articles publiés dans les 30 derniers jours.
+-- Trouver les catégories qui n'ont aucun article associé
+DELIMITER //
+create function nombreTotal(titre varchar(100))
+returns int 
+begin 
+declare total int ;
+  select count(*)  into total  from  Article  , Categorie  where Article.categor = Categorie.id and Categorie.titre=titre;
+return total;
+end;
+//
+DELIMITER ;
