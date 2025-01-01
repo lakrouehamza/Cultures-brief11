@@ -21,5 +21,36 @@ class Auteur extends Utilisateur{
         }
         else return null;
     }
+    public function deleteArticle($article){
+        if($article instanceof Article){
+            $connect =  new Connect();
+            $stmt = $connect->getConnect()->prepare("delete from  article where id = :id");
+            $id = $article->getId();
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();
+            return true;
+        }
+        else return false;
+    }
+    public function editArticle($article,$newArticle){
+        if(($article instanceof Article)  && ($newArticle instanceof Article) ){
+            $connect = new Connect();
+            $stmt = $connect->getConnect()->prepare("update article set statut = :statut , titre = :titre ,contraire = :contraire ,categor = :categor where id = :id");
+            $statut = $newArticle->getStatut();
+            $titre = $newArticle->getTitre();
+            $containere =$newArticle->getContainer();
+            $categor = $newArticle->getCategor();
+            $id = $article->getId();
+            $stmt->bindParam(":statut",$statut,PDO::PARAM_STR);
+            $stmt->bindParam(":titre",$titre,PDO::PARAM_STR);
+            $stmt->bindParam(":contraire",$containere,PDO::PARAM_STR);
+            $stmt->bindParam(":categor",$categor,PDO::PARAM_INT);
+            $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        }
+        else 
+        return false;
+    }
 };
 ?>
