@@ -51,5 +51,11 @@ class Utilisateur{
     public function getRole(){
         return $this->role;
     }
-}
+    public function loign(){
+        
+    }
+    public function signUp(){
+        
+    }
+};
 ?>
