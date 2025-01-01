@@ -53,9 +53,13 @@ class Utilisateur{
         return $this->role;
     }
     public function setSession(){
-    session_start();
-    $_SESSION['email']  = $this->getEmail();
-    $_SESSION['role']  = $this->getRole();
+        session_start();
+        $_SESSION['email']  = $this->getEmail();
+        $_SESSION['role']  = $this->getRole();
+    }
+    public function logout(){
+        session_unset();
+        session_destroy();
     }
     public function login(){
         $connect = new Connect();
