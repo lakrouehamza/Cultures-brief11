@@ -11,7 +11,10 @@
 require_once("header.php");
 require_once("../../classes/Admin.php");
 $admin =new Admin();
+if(isset($_POST['continuer']) && isset($_POST['save'])){
+$catigorie =  new  Categorie();
 
+}
 ?>
 
 
@@ -39,7 +42,7 @@ $admin =new Admin();
       <p class="mb-4 text-center text-sm"> You can add a new category.
       </p>
       <form action="" method="POST">
-        <textarea class="mb-3 w-full rounded-lg border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Write title category"></textarea>
+        <textarea name="continuer" class="mb-3 w-full rounded-lg border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Write title category"></textarea>
         
         <input  name="save" value="save" class="w-full rounded-lg bg-gray-900 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-gray-800"/>
         </form>

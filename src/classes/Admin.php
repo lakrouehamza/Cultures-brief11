@@ -9,7 +9,7 @@ public function crretionCategorie($categorie){
         $titre = $categorie->getTitre();
         $admin = $categorie->getAdmin();
         $stmt->bindParam(":titre",$titre,PDO::PARAM_STR);
-        $stmt->bindParam(":admin",$admin,PDO::PARRAM_INT);
+        $stmt->bindParam(":admin",$admin,PDO::PARAM_INT);
         return $stmt->execute();
     }
     return false;

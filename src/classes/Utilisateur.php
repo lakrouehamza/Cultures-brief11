@@ -111,5 +111,22 @@ class Utilisateur{
             exit;
         }
     }
+
+    public function remplir(){
+        $email =  $this->getEmail();
+        $conn = new Connect();
+        $stmt= $conn->getConnect()->prepare("select *  from  Utilisateur where email = :email");
+        $stmt->bindParam(":email",$email,PDO::PARAM_STR);
+        $stmt->execute();
+        if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $this->setNom($row['nom']);
+            $this->setPrenom($row['prenom']);
+            $this->setId($row['id']);
+            $this->setRole($row['role']);
+            $this->setPassword($row['password']);
+            return true ;
+        }
+        return false;
+    }
 };
 ?>
