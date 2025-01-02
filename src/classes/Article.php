@@ -21,7 +21,7 @@ public function setId($id){
 public function setStatut($statut){
     $this->statut =$statut;
 }
-public function setAuter($auter){
+public function setAuteur($auter){
     $this->auter =$auter;
 }
 public function setTitre($titre){
@@ -39,7 +39,7 @@ public function getTitre(){
 public function getStatut(){
     return $this->statut ;
 }
-public function getAuter(){
+public function getAuteur(){
     return $this->auter ;
 }
 public function getCategor(){
@@ -51,5 +51,22 @@ public function getContainer(){
 public function getId(){
     return $this->id ;
 }
+public function remplir(){
+    $id =  $this->getId();
+    $conn = new Connect();
+    $stmt= $conn->getConnect()->prepare("select *  from  Article where id = :id");
+    $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+    $stmt->execute();
+    if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $this->setTitre($row['titre']);
+        $this->setStatut($row['statut']);
+        $this->setAuteur($row['auteur']);
+        $this->setContainer($row['contraire']);
+        $this->setCategor($row['categor']);
+        return true ;
+    }
+    return false;
+}
+
 }
 ?>
