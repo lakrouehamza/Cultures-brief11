@@ -32,6 +32,7 @@ create table Categorie (
     admin int not null,
     constraint FK_adminCtgr  foreign  key (admin) references  Admin(id) on delete cascade on update cascade
 );
+insert into Categorie (titre , admin) values ('Drama',3);
 create table Article (
     id int primary key auto_increment ,
     statut enum('confirme','annule','encours'),

@@ -15,6 +15,11 @@ if(isset($_POST['logout'])){
 ?>
 
 
+
+
+
+
+
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             <!-- CARD 1 -->
             <div class="rounded overflow-hidden shadow-lg flex flex-col">
@@ -46,5 +51,6 @@ if(isset($_POST['logout'])){
             
         </div>
 <?php require_once('./../generalPages/footer.php');?>
+
 </body>
 </html>

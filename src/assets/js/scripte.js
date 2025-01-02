@@ -37,3 +37,5 @@ document.querySelectorAll('.contianerbtn').forEach(text =>{
 //     document.getElementById('replyrcommit').classList.toggle('hidden');
 //     document.getElementById('replyLike').classList.toggle('hidden');
 // }
+
+console.log("connect");
