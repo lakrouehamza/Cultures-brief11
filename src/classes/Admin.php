@@ -27,6 +27,21 @@ public function deleteCategorie($categorie){
     }
     return false;
 }
+public function updateCategorie($categorie , $newCategorie){
+    $conn =  new Connect();
+    $stmt = $conn->getConnect()->prepare("update Categorie set titre = :titre where id = :id");
+    $titre = $newCategorie->getTitre();
+    $id = $categorie->getId();
+    $stmt->bindParam(":titre",$titre);
+    $stmt->bindParam(":id",$id);
+    $stmt->execute();
+}
+public function selectCategorie(){
+    $conn = new Connect();
+    $stmt = $conn->getConnect()->prepare("select *  from  Categorie");
+    $stmt->execute();
+    return $stmt;
+}
 
 
 };
