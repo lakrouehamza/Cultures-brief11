@@ -13,6 +13,7 @@
     require_once("../../classes/Admin.php");
 
     require_once('header.php');
+    
     $admin = new Admin();
     $admin->setEmail($_SESSION['email']);
     $admin->remplir();

@@ -5,17 +5,19 @@ class Auteur extends Utilisateur{
     public function ecrireArticle($article){
         if($article instanceof Article ){
             $connect = new Connect();
-            $stmt = $connect->getConnect()->prepare("insert  into article (statut ,auteur,titre,contraire,categor) values (:statut ,:auteur,:titre,:contraire,:categor)");
+            $stmt = $connect->getConnect()->prepare("insert  into article (statut ,auteur,titre,contraire,categor,dateArticle) values (:statut ,:auteur,:titre,:contraire,:categor,:dateArticle)");
             $statut = $article->getStatut();
             $auteur =$this->getId();
             $titre = $article->getTitre();
             $containere =$article->getContainer();
             $categor = $article->getCategor();
+            $dateArticle= date('y-m-d');
             $stmt->bindParam(":statut",$statut,PDO::PARAM_STR);
             $stmt->bindParam(":auteur",$auteur,PDO::PARAM_INT);
             $stmt->bindParam(":titre",$titre,PDO::PARAM_STR);
             $stmt->bindParam(":contraire",$containere,PDO::PARAM_STR);
             $stmt->bindParam(":categor",$categor,PDO::PARAM_INT);
+            $stmt->bindParam(":dateArticle",$dateArticle,PDO::PARAM_INT);
             $stmt->execute();
             return  $stmt;
         }
@@ -54,7 +56,7 @@ class Auteur extends Utilisateur{
     }
     public function listArticle(){
         $conn = new Connect();
-        $stmt = $conn->getConnect()->prepare("select *  from  Article");
+        $stmt = $conn->getConnect()->prepare("select *  from  Article where statut ='confirme' order by dateArticle ");
         $stmt->execute();
         return $stmt;
     }

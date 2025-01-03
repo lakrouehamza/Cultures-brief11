@@ -1,4 +1,4 @@
-create database cultures;
+create database cultures
 use cultures;
 
 drop  table utilisateur;
@@ -32,7 +32,6 @@ create table Categorie (
     admin int not null,
     constraint FK_adminCtgr  foreign  key (admin) references  Admin(id) on delete cascade on update cascade
 );
-insert into Categorie (titre , admin) values ('Drama',3);
 create table Article (
     id int primary key auto_increment ,
     statut enum('confirme','annule','encours'),
@@ -63,6 +62,13 @@ create table lescommits(
     constraint FK_AuteurCommit foreign key (auteur) references Members (id) on delete cascade on update cascade,
     constraint FK_Rply foreign key(reply) references lescommits(id) on delete cascade on update cascade
 );
+
+
+
+insert into Categorie (titre , admin) values ('Drama',3);
+
+
+
 
 DELIMITER //
 create Trigger insetRole
@@ -112,12 +118,6 @@ select a.id as articleID ,a.statut,a.auteur ,a.titre as titreArticle ,a.contrair
 from  Article a , Categorie c ,Utilisateur  u 
  where a.categor = c.id and a.auteur = u.id;
 
--- Script Sql:
--- Trouver le nombre total d'articles publiés par catégorie.
--- Identifier les auteurs les plus actifs en fonction du nombre d'articles publiés.
--- Calculer la moyenne d'articles publiés par catégorie.
--- Créer une vue affichant les derniers articles publiés dans les 30 derniers jours.
--- Trouver les catégories qui n'ont aucun article associé
 DELIMITER //
 create function nombreTotal(titre varchar(100))
 returns int 

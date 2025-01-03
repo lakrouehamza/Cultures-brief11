@@ -83,7 +83,7 @@ if(isset($_POST['titre']) && isset($_POST['save'])){
 
 
 <div class="bg-white p-8 overflow-auto mt-16 h-screen <?php echo $hiddenT ?>" >
-  <h2 class="text-2xl mb-4">Classes List</h2>
+  <h2 class="text-2xl mb-4"></h2>
 
   <!-- Classes Table -->
   <div class="relative overflow-auto">

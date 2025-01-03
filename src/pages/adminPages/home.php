@@ -8,9 +8,16 @@
 <body>
 <?php require_once('header.php');
 require_once('./../../classes/Admin.php');
+require_once('./../../classes/Article.php');
 $admin  = new Admin();
 if(isset($_POST['logout'])){
     $admin->logout();
+}
+$stmt = $admin->SeleteArticle();
+if(isset($_POST['delete'])){
+$article = new Article();
+$article->setId($_POST['id']);
+$admin->deleteArticle($article);
 }
 ?>
 
@@ -20,37 +27,44 @@ if(isset($_POST['logout'])){
 
 
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+<div class="grid grid-cols-1 mt-10 py-6 sm:grid-cols-2 md:grid-cols-3 gap-10">
             <!-- CARD 1 -->
+             <?php 
+             while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+             ?>
             <div class="rounded overflow-hidden shadow-lg flex flex-col">
                 <div class="relative">
                     <div>
-                        <button
-                            class="text-xs absolute top-0 w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                            Delete
-                        </button>
+                    <form method="POST" action="">
+                            <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
+                            <button type="submit" name="delete"
+                                class="text-xs absolute  w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                                Delete
+                            </button>
+                        </form>
                     </div>
                     <div class="px-6 py-4 mb-auto">
-                        <div class="max-w-md mx-auto mt-10">
-                            <h1 class="py-2 font-bold text-xl">Article Heading</h1>
-                            <p class="leading-relaxed">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ipsum vel nunc commodo hendrerit sit amet vel
-                                nisi. Donec sodales maximus justo, nec dictum lectus malesuada non. Sed auctor ultrices tellus non varius.
-                                <span class="hidden" id="more-text">
-                                    Sed eu enim malesuada, fermentum mi eu, finibus velit. Nam quis blandit velit, vel vehicula neque. Etiam eu lorem suscipit, sollicitudin ante at, pharetra quam.
-                                </span>
-                            </p>
-                            <button id="toggle-btn" class="mt-4 text-blue-500 focus:outline-none "   onclick="red_hideMore()">Read More</button>
-                            <button id="hide-btn" class="hidden mt-4 text-blue-500 focus:outline-none" onclick="red_hideMore()">Hide</button>
-                        </div>
+                        <div class="max-w-md mx-auto mt-0  contianerbtn">
+                        <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
+                        <p class="leading-relaxed"> <?php echo substr($row['contraire'],0,100); ?>
+                            <span class="hidden  btn" id="more-text">
+                            <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>                            </span>
+                        </p>
+                        <button  class="mt-4 text-blue-500 focus:outline-none  toggle-btn "   >Read More</button>
+                        <button  class="hidden mt-4 text-blue-500 focus:outline-none  hide-btn" >Hide</button>
+                    </div>
                     </div>                       
                 </div>
             </div>
+            <?php   
+             }
+            ?>
 
 
             
         </div>
 <?php require_once('./../generalPages/footer.php');?>
 
+<script src="./../../../src/assets/js/scriptPageAuteur.js"></script>
 </body>
 </html>

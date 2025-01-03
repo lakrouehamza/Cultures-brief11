@@ -7,16 +7,20 @@
 </head>
 <body>
 <?php 
-require_once('header.php');
+
+require_once('header.php'); 
 require_once("./../../classes/Auteur.php");
 $auteur = new  Auteur();
 $article =new Article();
-require_once('./popapAjouteArticle.php');
+require_once('popapAjouteArticle.php');
 $auteur->setEmail($_SESSION['email']);
 $auteur->remplir();
+
+echo $_SESSION['email'];
 if(isset($_POST['logout'])){
     $auteur->logout();
 }
+
 if(isset($_POST['containe']) && isset($_POST['title'])&& isset($_POST['categorie'])){
     $article->setTitre($_POST['title']);
     $article->setContainer($_POST['containe']);
@@ -44,6 +48,7 @@ if(isset($_POST['saveEdit'])   && isset($_POST['Editcontaine']) && isset($_POST[
     $auteur->editArticle($article,$newarticle);
 }
 $stmt =$auteur->listArticle();
+
 ?>
  
    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-10">
@@ -72,16 +77,15 @@ $stmt =$auteur->listArticle();
                         
                     </div>
                     <div class="px-6 py-4 mb-auto">
-                        <div class="max-w-md mx-auto mt-10">
-                            <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
-                            <p class="leading-relaxed"><?php echo substr($row['contraire'],0,100); ?>
-                                <span class="hidden" id="more-text">
-                                    <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>
-                                </span>
-                            </p>
-                            <button id="toggle-btn" class="mt-4 text-blue-500 focus:outline-none "   onclick="red_hideMore()">Read More</button>
-                            <button id="hide-btn" class="hidden mt-4 text-blue-500 focus:outline-none" onclick="red_hideMore()">Hide</button>
-                        </div>
+                    <div class="max-w-md mx-auto mt-0  contianerbtn">
+                        <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
+                        <p class="leading-relaxed"> <?php echo substr($row['contraire'],0,100); ?>
+                            <span class="hidden  btn" id="more-text">
+                            <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>                            </span>
+                        </p>
+                        <button  class="mt-4 text-blue-500 focus:outline-none  toggle-btn "   >Read More</button>
+                        <button  class="hidden mt-4 text-blue-500 focus:outline-none  hide-btn" >Hide</button>
+                    </div>
                     </div>
                     <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
                         <button  id="views"

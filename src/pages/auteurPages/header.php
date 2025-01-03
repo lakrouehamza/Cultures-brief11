@@ -1,6 +1,12 @@
 <?php 
 require_once('../../assets/functions/authentification.php');
 authentificationAuteur();
+
+require_once("./../../classes/Auteur.php");
+$auteurL = new  Auteur();
+if(isset($_POST['logout'])){
+    $auteurL->logout();
+}
 ?>
 <script src="https://cdn.tailwindcss.com"></script>
 <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
@@ -38,7 +44,15 @@ authentificationAuteur();
 				</svg>
 			</button>
         </div>
-       
+        <div class="items-center  justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+            <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                <li>
+                    <a href="listeArticle.php"
+                        class="block py-2 pl-3 pr-4 text-black hover:bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-black"
+                        aria-current="page">liste de article</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 

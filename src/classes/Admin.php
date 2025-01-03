@@ -43,6 +43,12 @@ public function listArticle(){
     $stmt->execute();
     return $stmt;
 }
+public function SeleteArticle(){
+    $conn = new Connect();
+    $stmt = $conn->getConnect()->prepare("select *  from  Article");
+    $stmt->execute();
+    return $stmt;
+}
 
 public function confirmeArticle($id ,$status){
     $conn = new Connect();
@@ -52,7 +58,45 @@ public function confirmeArticle($id ,$status){
     $stmt->execute();
     return $stmt;
 }
+public function deleteArticle($article){
+    if($article instanceof Article){
+        $connect =  new Connect();
+        $stmt = $connect->getConnect()->prepare("delete from  article where id = :id");
+        $id = $article->getId();
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+        return true;
+    }
+    else return false;
+}
 
 };
 
 ?>
+
+
+
+public function ecrireArticle($article) {
+    if ($article instanceof Article) {
+        $connect = new Connect();
+        $stmt = $connect->getConnect()->prepare("
+            INSERT INTO article (statut, auteur, titre, container, categor, dateArticle)
+            VALUES (:statut, :auteur, :titre, :container, :categor, :dateArticle)
+        ");
+        $statut = $article->getStatut();
+        $auteur = $this->getId();  
+        $titre = $article->getTitre();
+        $container = $article->getContainer(); 
+        $categor = $article->getCategor();
+        $dateArticle = date('Y-m-d'); 
+        $stmt->bindParam(":statut", $statut, PDO::PARAM_STR);
+        $stmt->bindParam(":auteur", $auteur, PDO::PARAM_INT);
+        $stmt->bindParam(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindParam(":container", $container, PDO::PARAM_STR); 
+        $stmt->bindParam(":categor", $categor, PDO::PARAM_INT);
+        $stmt->bindParam(":dateArticle", $dateArticle, PDO::PARAM_STR); 
+        $stmt->execute()
+            return $stmt;
+        } else 
+            return null;
+}
