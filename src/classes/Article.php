@@ -2,15 +2,15 @@
 class Article{
 private ?int $id;
 private ?String $statut;
-private ?int $auter;
+private ?int $auteur;
 private ?String $titre;
 private ?int $categor;
 private ?String $container;
-public function __construct($id=0,$statut,$auter,$titre,$categor, $container)
+public function __construct($id=0,$statut="encours",$auteur=0,$titre='',$categor=0, $container='')
 {
     $this->id=$id;
     $this->statut=$statut;
-    $this->auter=$auter;
+    $this->auteur=$auteur;
     $this->titre=$titre;
     $this->categor=$categor;
     $this->container=$container;
@@ -21,8 +21,8 @@ public function setId($id){
 public function setStatut($statut){
     $this->statut =$statut;
 }
-public function setAuteur($auter){
-    $this->auter =$auter;
+public function setAuteur($auteur){
+    $this->auteur =$auteur;
 }
 public function setTitre($titre){
     $this->titre =$titre;
@@ -40,7 +40,7 @@ public function getStatut(){
     return $this->statut ;
 }
 public function getAuteur(){
-    return $this->auter ;
+    return $this->auteur ;
 }
 public function getCategor(){
     return $this->categor ;

@@ -128,5 +128,11 @@ class Utilisateur{
         }
         return false;
     }
+    public function selectCategorie(){
+        $conn = new Connect();
+        $stmt = $conn->getConnect()->prepare("select *  from  Categorie");
+        $stmt->execute();
+        return $stmt;
+    }
 };
 ?>

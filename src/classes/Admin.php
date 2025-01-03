@@ -36,13 +36,22 @@ public function updateCategorie($categorie , $newCategorie){
     $stmt->bindParam(":id",$id);
     $stmt->execute();
 }
-public function selectCategorie(){
+
+public function listArticle(){
     $conn = new Connect();
-    $stmt = $conn->getConnect()->prepare("select *  from  Categorie");
+    $stmt = $conn->getConnect()->prepare("select *  from  selectArticl");
     $stmt->execute();
     return $stmt;
 }
 
+public function confirmeArticle($id ,$status){
+    $conn = new Connect();
+    $stmt = $conn->getConnect()->prepare("call confirmeArticle(:id,:statu) ;");
+    $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+    $stmt->bindParam(":statu",$status,PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt;
+}
 
 };
 

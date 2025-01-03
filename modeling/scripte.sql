@@ -92,6 +92,26 @@ delimiter ;
 
 ​
 
+
+
+delimiter //
+create procedure confirmeArticle(in Nid int, in Nstatut varchar(20))
+begin
+    if Nstatut = 'annule' then 
+        delete from article where id = Nid;
+    else 
+        update article set statut = Nstatut where id = Nid;
+    end if;
+end;
+//
+delimiter ;
+
+
+create view selectArticl as
+select a.id as articleID ,a.statut,a.auteur ,a.titre as titreArticle ,a.contraire,u.nom ,u.prenom,u.email,c.titre as titreCategorie 
+from  Article a , Categorie c ,Utilisateur  u 
+ where a.categor = c.id and a.auteur = u.id;
+
 -- Script Sql:
 -- Trouver le nombre total d'articles publiés par catégorie.
 -- Identifier les auteurs les plus actifs en fonction du nombre d'articles publiés.
@@ -116,3 +136,5 @@ select * from utilisateur u  , Article ar  where   u.id =ar.auteur  group by ar.
 end ;
 //
 DELIMITER;
+
+

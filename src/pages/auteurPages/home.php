@@ -7,44 +7,76 @@
 </head>
 <body>
 <?php 
+require_once('header.php');
 require_once("./../../classes/Auteur.php");
 $auteur = new  Auteur();
-require_once('header.php');
+$article =new Article();
+require_once('./popapAjouteArticle.php');
+$auteur->setEmail($_SESSION['email']);
+$auteur->remplir();
 if(isset($_POST['logout'])){
     $auteur->logout();
 }
-if(isset($_POST['containe']) && isset($_POST['title'])){
-    
+if(isset($_POST['containe']) && isset($_POST['title'])&& isset($_POST['categorie'])){
+    $article->setTitre($_POST['title']);
+    $article->setContainer($_POST['containe']);
+    $article->setCategor($_POST['categorie']);
+     $auteur->ecrireArticle($article);
+    //  echo $_POST['title'];
 }
+if(isset($_POST['delete'])){
+    $article->setId($_POST['id']);
+    $article->remplir();
+    $auteur->deleteArticle($article);
+}
+if(isset($_POST['edit'])){
+    $article->setId($_POST['id']);
+    $article->remplir();
+    require('popapEdite.php');
+}
+if(isset($_POST['saveEdit'])   && isset($_POST['Editcontaine']) && isset($_POST['Edittitle'])&& isset($_POST['Editcategorie']) ){
+    $newarticle = new Article();
+    $newarticle->setTitre($_POST['Edittitle']);
+    $newarticle->setContainer($_POST['Editcontaine']);
+    $newarticle->setCategor($_POST['Editcategorie']);
+    $article->setId($_POST['id']);
+    $article->remplir();
+    $auteur->editArticle($article,$newarticle);
+}
+$stmt =$auteur->listArticle();
 ?>
-   
-<?php
-require_once('./popapAjouteArticle.php');
-?>
+ 
    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[20px] gap-10">
+    <?php 
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    ?>
             <!-- CARD 1 -->
             <div class="rounded overflow-hidden shadow-lg flex flex-col">
                 <div class="relative">
                     <div>
-                        <button
-                            class="text-xs absolute top-0 w-[63px] right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                            Edit
-                        </button>
-                        <button
-                            class="text-xs absolute top-10 w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                            Delete
-                        </button>
+                        <form method="POST" action="">
+                            <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
+                            <button name="edit"
+                                class="text-xs absolute top-0 w-[63px] right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                                Edit
+                            </button>
+                        </form>
+                        <form method="POST" action="">
+                            <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
+                            <button type="submit" name="delete"
+                                class="text-xs absolute top-10 w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                                Delete
+                            </button>
+                        </form>
                 
                         
                     </div>
                     <div class="px-6 py-4 mb-auto">
                         <div class="max-w-md mx-auto mt-10">
-                            <h1 class="py-2 font-bold text-xl">Article Heading</h1>
-                            <p class="leading-relaxed">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ipsum vel nunc commodo hendrerit sit amet vel
-                                nisi. Donec sodales maximus justo, nec dictum lectus malesuada non. Sed auctor ultrices tellus non varius.
+                            <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
+                            <p class="leading-relaxed"><?php echo substr($row['contraire'],0,100); ?>
                                 <span class="hidden" id="more-text">
-                                    Sed eu enim malesuada, fermentum mi eu, finibus velit. Nam quis blandit velit, vel vehicula neque. Etiam eu lorem suscipit, sollicitudin ante at, pharetra quam.
+                                    <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>
                                 </span>
                             </p>
                             <button id="toggle-btn" class="mt-4 text-blue-500 focus:outline-none "   onclick="red_hideMore()">Read More</button>
@@ -119,7 +151,8 @@ require_once('./popapAjouteArticle.php');
 
                     </div>        
                 </div>
-            </div>            
+            </div> 
+    <?php }?>           
         </div>
 
 <?php 

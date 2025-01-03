@@ -52,5 +52,11 @@ class Auteur extends Utilisateur{
         else 
         return false;
     }
+    public function listArticle(){
+        $conn = new Connect();
+        $stmt = $conn->getConnect()->prepare("select *  from  Article");
+        $stmt->execute();
+        return $stmt;
+    }
 };
 ?>
