@@ -118,6 +118,11 @@ select a.id as articleID ,a.statut,a.auteur ,a.titre as titreArticle ,a.contrair
 from  Article a , Categorie c ,Utilisateur  u 
  where a.categor = c.id and a.auteur = u.id;
 
+create view selectArticl_encour as
+select a.id as articleID ,a.statut,a.auteur ,a.titre as titreArticle ,a.contraire,u.nom ,u.prenom,u.email,c.titre as titreCategorie 
+from  Article a , Categorie c ,Utilisateur  u 
+ where a.statut='encours' and a.categor = c.id and a.auteur = u.id;
+
 DELIMITER //
 create function nombreTotal(titre varchar(100))
 returns int 

@@ -60,5 +60,13 @@ class Auteur extends Utilisateur{
         $stmt->execute();
         return $stmt;
     }
+    
+    public function listTouteArticle(){
+        $conn = new Connect();
+        $stmt = $conn->getConnect()->prepare("select a.* , c.titre as titreCategorie from  Article a,Categorie c  where a.categor = c.id  order by a.dateArticle ");
+        $stmt->execute();
+        return $stmt;
+    }
+    
 };
 ?>

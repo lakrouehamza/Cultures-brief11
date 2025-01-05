@@ -43,6 +43,12 @@ public function listArticle(){
     $stmt->execute();
     return $stmt;
 }
+public function listArticle_encore(){
+    $conn = new Connect();
+    $stmt = $conn->getConnect()->prepare("select *  from  selectArticl_encour");
+    $stmt->execute();
+    return $stmt;
+}
 public function SeleteArticle(){
     $conn = new Connect();
     $stmt = $conn->getConnect()->prepare("select *  from  Article");
@@ -75,7 +81,7 @@ public function deleteArticle($article){
 ?>
 
 
-
+<!-- 
 public function ecrireArticle($article) {
     if ($article instanceof Article) {
         $connect = new Connect();
@@ -99,4 +105,4 @@ public function ecrireArticle($article) {
             return $stmt;
         } else 
             return null;
-}
+} -->

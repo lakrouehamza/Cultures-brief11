@@ -40,7 +40,7 @@ $stmt = $auteur->selectCategorie();
                         Categorie:
                         </label>
                         <select  name="categorie" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Categorie"  >
-                            <option value="">Select Categorie </option>
+                            <option value="">Select Category</option>
                             <?php 
                             while($row =$stmt->fetch(PDO::FETCH_ASSOC)){
                             ?>

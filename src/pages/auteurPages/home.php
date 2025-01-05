@@ -8,18 +8,10 @@
 <body>
 <?php 
 
-require_once('header.php'); 
-require_once("./../../classes/Auteur.php");
-$auteur = new  Auteur();
-$article =new Article();
-require_once('popapAjouteArticle.php');
-$auteur->setEmail($_SESSION['email']);
-$auteur->remplir();
+require_once('header.php');
 
-echo $_SESSION['email'];
-if(isset($_POST['logout'])){
-    $auteur->logout();
-}
+// echo $_SESSION['email'];
+
 
 if(isset($_POST['containe']) && isset($_POST['title'])&& isset($_POST['categorie'])){
     $article->setTitre($_POST['title']);

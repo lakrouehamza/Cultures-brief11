@@ -17,7 +17,7 @@
     $admin = new Admin();
     $admin->setEmail($_SESSION['email']);
     $admin->remplir();
-    $stmt = $admin->listArticle();
+    $stmt = $admin->listArticle_encore();
     
 if(isset($_POST['confireme'])){
     $admin->confirmeArticle($_POST['confireme'],'confirme');
