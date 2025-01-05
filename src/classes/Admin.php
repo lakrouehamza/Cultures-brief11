@@ -51,7 +51,7 @@ public function listArticle_encore(){
 }
 public function SeleteArticle(){
     $conn = new Connect();
-    $stmt = $conn->getConnect()->prepare("select *  from  Article");
+    $stmt = $conn->getConnect()->prepare("select *  from  Article where statut ='confirme'");
     $stmt->execute();
     return $stmt;
 }
@@ -74,6 +74,18 @@ public function deleteArticle($article){
         return true;
     }
     else return false;
+}
+public function listUtilisateur(){
+    $connect =  new Connect();
+    $stmt = $connect->getConnect()->prepare("select *  from  utilisateur where role='membre' or role='auteur' ");
+    $stmt->execute();
+    return $stmt;
+}
+public function deleteUser($id){
+    $con = new Connect();
+    $stmt = $con->getConnect()->prepare("delete from  Utilisateur where id = :id");
+    $stmt->bindParam(":id",$id);
+    $stmt->execute();
 }
 
 };

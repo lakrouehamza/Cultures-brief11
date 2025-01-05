@@ -58,34 +58,29 @@ if(isset($_POST['titre']) && isset($_POST['save'])){
     font-weight: 300;
     font-style: normal;
   }
-</style>
-<div class="flex min-h-screen  <?php echo $hiddenF ?> items-center justify-center bg-black/30 p-4 popap">
+</style><div class="flex min-h-screen <?php echo $hiddenF ?> items-center justify-center bg-black/30 p-4 popap">
   <div class="w-full max-w-sm">
     <div class="relative rounded-2xl bg-white p-6 shadow">
       <div class="mb-4 flex items-center justify-between">
-      <form action="" method="POST">
-        <h2 class="text-xl font-semibold text-gray-900">add category</h2>
-            <button class="absolute right-5 top-5 text-gray-400 hover:text-gray-600" type="submit">
+        <form action="" method="POST">
+          <h2 class="text-xl font-semibold text-gray-900">Ajouter une catégorie</h2>
+          <button class="absolute right-5 top-5 text-gray-400 hover:text-gray-600" type="submit">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            </button>
-            </div>
-            <p class="mb-4 text-center text-sm"> You can add a new category.
-            </p>
-            <textarea name="titre" class="mb-3 w-full rounded-lg border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Write title category"></textarea>
-            <input  name="save" value="save" class="w-full rounded-lg bg-gray-900 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-gray-800" type="submit"/>
+          </button>
         </form>
+      </div>
+      <p class="mb-4 text-center text-sm">Vous pouvez ajouter une nouvelle catégorie.</p>
+      <textarea name="titre" class="mb-3 w-full rounded-lg border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Entrez le titre de la catégorie"></textarea>
+      <input name="save" value="Enregistrer" class="w-full rounded-lg bg-gray-900 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-gray-800" type="submit" />
     </div>
   </div>
 </div>
 
+<div class="bg-white p-8 overflow-auto mt-16 h-screen <?php echo $hiddenT ?>">
+  <h2 class="text-2xl mb-4">Liste des catégories</h2>
 
-
-<div class="bg-white p-8 overflow-auto mt-16 h-screen <?php echo $hiddenT ?>" >
-  <h2 class="text-2xl mb-4"></h2>
-
-  <!-- Classes Table -->
   <div class="relative overflow-auto">
     <div class="overflow-x-auto rounded-lg">
       <table class="min-w-full bg-white border mb-20">
@@ -98,31 +93,30 @@ if(isset($_POST['titre']) && isset($_POST['save'])){
           </tr>
         </thead>
         <tbody>
-            <?php  
-                while($row =$stmt->fetch(PDO::FETCH_ASSOC)){
-            ?>
+          <?php  
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          ?>
           <tr class="border-b text-xs md:text-sm text-center text-gray-800">
-            <td class="p-2 md:p-4"><?php echo $row['titre']?></td>
+            <td class="p-2 md:p-4"><?php echo $row['titre'] ?></td>
             <td class="relative p-2 md:p-4 flex justify-center space-x-2">
-             
-              <form method="POST" >
-                <input type="text"  class="hidden"  name="id" value="<?php echo $row['id']?>" id="">
-                <input  type="submit" name="edit" value="Edit" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">
-            </form>
-            <form method="POST" >
-                <input type="text" class="hidden"  name="id" value="<?php echo $row['id']?>" id="">
-                <input  type="submit" value="Delete" name="delete" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">
-            </form>
+              <form method="POST">
+                <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+                <input type="submit" name="edit" value="Modifier" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">
+              </form>
+              <form method="POST">
+                <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+                <input type="submit" name="delete" value="Supprimer" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">
+              </form>
             </td>
           </tr>
-            <?php }?>
+          <?php } ?>
         </tbody>
       </table>
     </div>
   </div>
 </div>
 
-<?php require_once("../generalPages/footer.php");?>
+<?php require_once("../generalPages/footer.php"); ?>
 <script src="../../assets/js/scripteAdmin.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ $stmt = $auteur->selectCategorie();
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                         cliprule="evenodd"></path>
                 </svg>
-                <span class="sr-only">Close popup</span>
+                <span class="sr-only">Fermer le popup</span>
             </button>
 
             <div class="p-5">
@@ -24,42 +24,42 @@ $stmt = $auteur->selectCategorie();
 
                 <div class="text-center">
                     <p class="mb-3 text-2xl font-semibold leading-5 text-slate-900">
-                        Login to your account
+                        Connectez-vous à votre compte
                     </p>
                 </div>
                 <form method="POST" class="max-w-md mx-auto mt-20 p-6 bg-white border rounded-lg shadow-lg">
-                    <h2 class="text-2xl font-bold mb-6">Feedback Form</h2>
+                    <h2 class="text-2xl font-bold mb-6">Formulaire de feedback</h2>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="title">
-                            title:
+                            Titre :
                         </label>
-                        <input  name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Enter your title">
+                        <input name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Entrez votre titre">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="Categorie">
-                        Categorie:
+                        Catégorie :
                         </label>
-                        <select  name="categorie" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Categorie"  >
-                            <option value="">Select Category</option>
+                        <select name="categorie" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Categorie">
+                            <option value="">Sélectionner une catégorie</option>
                             <?php 
                             while($row =$stmt->fetch(PDO::FETCH_ASSOC)){
                             ?>
-                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['titre'] ;?></option>
+                             <option value="<?php echo $row['id']; ?>"><?php echo $row['titre']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="container">
-                            container:
+                            Contenu :
                         </label>
-                        <textarea name="containe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="containe" rows="5" placeholder="Enter your containe"></textarea>
+                        <textarea name="containe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="containe" rows="5" placeholder="Entrez votre contenu"></textarea>
                     </div>
                     <div class="flex flex-row justify-between" >
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                            save
+                            Enregistrer
                         </button>
                         <button class="bg-white-500 hover:bg-gray-700 text-black border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onclick="toggelPopap()">
-                            anull
+                            Annuler
                         </button>
                     </div>
                 </form>

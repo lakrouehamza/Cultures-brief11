@@ -25,45 +25,48 @@ $admin->deleteArticle($article);
 
 
 
-
-
-<div class="grid grid-cols-1 mt-10 py-6 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            <!-- CARD 1 -->
-             <?php 
-             while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-             ?>
-            <div class="rounded overflow-hidden shadow-lg flex flex-col">
-                <div class="relative">
-                    <div>
-                    <form method="POST" action="">
-                            <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
-                            <button type="submit" name="delete"
-                                class="text-xs absolute  w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                Delete
-                            </button>
-                        </form>
+<div class="grid grid-cols-1 mt-10 py-6 sm:grid-cols-2 md:grid-cols-3 gap-10"> 
+    <?php 
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+    ?>
+        <div class="rounded overflow-hidden shadow-lg flex flex-col">
+            <div class="relative"> 
+                <form method="POST" action="">
+                    <input type="hidden" value="<?php echo $row['id']; ?>" name="id" />
+                    <button type="submit" name="delete"
+                        class="text-xs absolute  right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                        Supprimer
+                    </button>
+                </form>
+ 
+                <div class="px-6 py-4 mb-auto">
+                    <div class="max-w-md mx-auto mt-0 contianerbtn"> 
+                        <h1 class="py-2 font-bold text-xl">
+                            <?php echo strtoupper($row['titre']); ?>
+                        </h1>
+                         
+                        <p class="leading-relaxed">
+                            <?php echo substr($row['contraire'], 0, 100); ?>
+                            <span class="hidden btn" id="more-text">
+                                <?php echo substr($row['contraire'], 101); ?>
+                            </span>
+                        </p> 
+                        <button class="mt-4 text-blue-500 focus:outline-none toggle-btn">
+                            Lire plus
+                        </button>
+                        <button class="hidden mt-4 text-blue-500 focus:outline-none hide-btn">
+                            Cacher
+                        </button>
                     </div>
-                    <div class="px-6 py-4 mb-auto">
-                        <div class="max-w-md mx-auto mt-0  contianerbtn">
-                        <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
-                        <p class="leading-relaxed"> <?php echo substr($row['contraire'],0,100); ?>
-                            <span class="hidden  btn" id="more-text">
-                            <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>                            </span>
-                        </p>
-                        <button  class="mt-4 text-blue-500 focus:outline-none  toggle-btn "   >Read More</button>
-                        <button  class="hidden mt-4 text-blue-500 focus:outline-none  hide-btn" >Hide</button>
-                    </div>
-                    </div>                       
                 </div>
             </div>
-            <?php   
-             }
-            ?>
-
-
-            
         </div>
-<?php require_once('./../generalPages/footer.php');?>
+    <?php 
+    } 
+    ?>
+</div>
+
+<?php require_once('./../generalPages/footer.php'); ?>
 
 <script src="./../../../src/assets/js/scriptPageAuteur.js"></script>
 </body>
