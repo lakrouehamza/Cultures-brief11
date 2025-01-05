@@ -53,12 +53,7 @@ if(isset($_POST['typeCategorie'])){
 
     <div class="container mx-auto px-4">
         <nav class="flex flex-row flex-nowrap justify-between md:justify-center items-center" aria-label="Pagination">
-             <a class="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-800 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600" href="#" title="Page Précédente">
-                <span class="sr-only">Page Précédente</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-            </a> 
+            
             <?php  
                 while($rowc =  $stmtC->fetch(PDO::FETCH_ASSOC)){
             ?>
@@ -69,12 +64,7 @@ if(isset($_POST['typeCategorie'])){
             <?php  
             }
             ?> 
-            <a class="flex w-10 h-10 ml-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-800 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600" href="#" title="Page Suivante">
-                <span class="sr-only">Page Suivante</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-            </a>
+            
         </nav>
     </div>   
 
