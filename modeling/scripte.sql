@@ -63,6 +63,13 @@ create table lescommits(
     constraint FK_Rply foreign key(reply) references lescommits(id) on delete cascade on update cascade
 );
 
+create trigger insertView 
+after insert on Article 
+for each row 
+insert into lesviews values(new.id);
+begin 
+end ;
+//
 
 
 insert into Categorie (titre , admin) values ('Drama',3);
@@ -142,4 +149,20 @@ end ;
 //
 DELIMITER;
 
+Trouver le nombre total d'articles publiés par catégorie.
+Identifier les auteurs les plus actifs en fonction du nombre d'articles publiés.
+Calculer la moyenne d'articles publiés par catégorie.
+Créer une vue affichant les derniers articles publiés dans les 30 derniers jours.
+Trouver les catégories qui n'ont aucun article associé
+
+-- script sql
+select a.*  ,count(ar.id) 
+from auteur a ,article ar
+ where a.id =ar.auteur 
+ order by count(ar.id) limit 10;
+
+----
+        select  c.* ,avg()  
+ from  Categorie  c ,article a 
+ where c.id = a.categor 
 

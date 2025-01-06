@@ -75,7 +75,9 @@ class Utilisateur{
                     header('Location: ../adminPages/home.php');
                     exit;
                 }
-                elseif($row['role']=="membre"){
+                elseif($row['role']=="membre"){ 
+
+                    // $this->tomessage('hamzalakroune8@gmail.com');
                     header('Location: ../memberPages/home.php');
                     exit;
                 }
@@ -87,6 +89,14 @@ class Utilisateur{
         }else echo "in email";
     }
 
+    public function tomessage($to){
+            $message = "bienvenue invite à publier des articles.\r\n";
+
+            $message = wordwrap($message, 70, "\r\n");
+
+            // Envoi du mail
+            echo mail($to, 'Contexte Cultures Partagées', $message) ? "Email envoyé avec succès." : "Erreur lors de l'envoi de l'email.";
+    }
     public function signUp(){
         $connect = new Connect();
         $stmt = $connect->getConnect()->prepare("select *  from  utilisateur where email = :email");

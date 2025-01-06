@@ -7,9 +7,15 @@
 </head>
 <?php 
 require_once("../../classes/Member.php");
-$membre = new  Member();
+require_once("../../classes/Article.php");
 require_once('header.php');
-if(isset($_POST['deconnexion'])){
+$membre = new  Member();
+$membre->setEmail($_SESSION['email']);
+$membre->remplir();  
+$article = new Article();
+$articleLike = new Article();
+ 
+if(isset($_POST['logout'])){
     $membre->logout();
 }
 
@@ -19,6 +25,11 @@ if(isset($_POST['typeCategorie'])){
     $stmtA = $membre->listArticle($id);
 }else{
     $stmtA = $membre->listArticle(0);
+}
+if(isset($_POST['likes'])){
+    $article->setId($_POST['likes']);
+    $article->remplir();
+    $membre->lesLike($article )  ;
 }
 ?>
 <body>
@@ -71,15 +82,18 @@ if(isset($_POST['typeCategorie'])){
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-[30px] gap-10">
     <?php 
     while($row = $stmtA->fetch(PDO::FETCH_ASSOC)){
+        $articleLike->setId($row['id']);
     ?> 
         <div class="rounded overflow-hidden shadow-lg flex flex-col containerCard">
             <div class="relative">
                 <div>
-                    <button class="likes absolute top-3 right-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>
-                    </button>
+                    <form action="" method="post">
+                        <button  type="submit" name="likes" value="<?php echo $row['id'] ; ?>" class="likes <?php echo $membre->SelectLikes($articleLike)?'bg-red-500':'';  ?>  absolute top-3 right-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
                 <div class="px-6 py-4 mb-auto">
                     <div class="max-w-md mx-auto mt-0 contianerbtn">
@@ -88,6 +102,7 @@ if(isset($_POST['typeCategorie'])){
                             <span class="hidden btn" id="more-text">
                             <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>                            </span>
                         </p>
+                        
                         <button class="mt-4 text-blue-500 focus:outline-none toggle-btn">Lire la suite</button>
                         <button class="hidden mt-4 text-blue-500 focus:outline-none hide-btn">Masquer</button>
                     </div>
