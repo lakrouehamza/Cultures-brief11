@@ -4,9 +4,9 @@ class Member extends Utilisateur{
     public function listArticle($id){
         $conn = new Connect();
         if($id==0)
-            $stmt = $conn->getConnect()->prepare("select *  from  Article where statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre from  Article a ,lesviews l where l.article = a.id and statut ='confirme' order by dateArticle ");
         else{
-            $stmt = $conn->getConnect()->prepare("select *  from  Article    where categor = :id and  statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre from  Article a ,lesviews l   where   l.article = a.id and  categor = :id and  statut ='confirme' order by dateArticle ");
             $stmt->bindParam(":id",$id);
         }
         $stmt->execute();
@@ -28,7 +28,9 @@ public function SelectLikes($article){
 public function wiews($article){
     $conn = new Connect();
     $ida = $article->getId();
-    $stmt =  $conn->getConnect()->prepare("insert into leslikes(membre,article) values(:membre,:article)");
+    $stmt =  $conn->getConnect()->prepare("update   lesviews set nombre = nombre +1  where article = :id");
+    $stmt->bindParam(":id",$ida);
+    $stmt->execute();
 }
     public function lesLike($article){
         $conn = new Connect();
@@ -50,6 +52,19 @@ public function wiews($article){
         return $stmt->execute();
         }
     }
-
-}
+    public function commit($article,$commit){
+        $conn = new Connect();
+        $id = $this->getId();
+        $article = $article->getId() ;
+        $commiti = $commit->getContraire() ;
+        $repy = $commit->getReply() ;
+        $stmt =  $conn->getConnect()->prepare("insert into lescommits (contraire,auteur,reply,article) values ( :contraire , :auteur , :reply , :article ) ");
+        $stmt->bindParam(":contraire",$commiti);
+        $stmt->bindParam(":auteur",$id);
+        $stmt->bindParam(":reply",$repy);
+        $stmt->bindParam(":article",$article);
+        return $stmt->execute();
+    }
+}  
 ?>
+<!-- singl sglstate -->

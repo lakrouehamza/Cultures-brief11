@@ -16,7 +16,7 @@ document.querySelectorAll('.contianerbtn').forEach(text =>{
         });
 });
 
-// console.log('HHhe');
+console.log('HHhe');
 
 // const  hide  = document.getElementById('hide-btn');
 // const RedBtn = document.getElementById('toggle-btn');

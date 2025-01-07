@@ -17,7 +17,7 @@ class Auteur extends Utilisateur{
             $stmt->bindParam(":titre",$titre,PDO::PARAM_STR);
             $stmt->bindParam(":contraire",$containere,PDO::PARAM_STR);
             $stmt->bindParam(":categor",$categor,PDO::PARAM_INT);
-            $stmt->bindParam(":dateArticle",$dateArticle,PDO::PARAM_INT);
+            $stmt->bindParam(":dateArticle",$dateArticle,PDO::PARAM_STR);
             $stmt->execute();
             return  $stmt;
         }

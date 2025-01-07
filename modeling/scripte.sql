@@ -59,8 +59,11 @@ create table lescommits(
     contraire varchar(100) not null,
     auteur int not null,
     reply  int ,
+    article int not null,
+    dataCommit DATETIME DEFAULT CURRENT_TIMESTAMP,
     constraint FK_AuteurCommit foreign key (auteur) references Members (id) on delete cascade on update cascade,
-    constraint FK_Rply foreign key(reply) references lescommits(id) on delete cascade on update cascade
+    constraint FK_Rply foreign key(reply) references lescommits(id) on delete cascade on update cascade,
+    constraint FK_ArticleComit foreign key(article) references Article(id) on delete cascade on update cascade
 );
 
 create trigger insertView 
@@ -165,4 +168,3 @@ from auteur a ,article ar
         select  c.* ,avg()  
  from  Categorie  c ,article a 
  where c.id = a.categor 
-
