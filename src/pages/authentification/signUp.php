@@ -47,7 +47,7 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
           <h1 class="pt-8 pb-6 font-bold text-5xl dark:text-gray-400 text-center cursor-default">
             INSCRIPTION
           </h1>
-          <form action="" method="POST" class="space-y-4">
+          <form action="" method="POST" class="space-y-4" >
             <div>
               <label for="nom" class="mb-2 dark:text-gray-400 text-lg">Nom</label>
               <input
@@ -115,6 +115,17 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
                 <option value="membre">Membre</option>
               </select>
             </div>
+            <div>
+              <label for="role" class="mb-2 dark:text-gray-400 text-lg">profile</label>
+              <input
+                id="image"
+                name="image"
+                class="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
+                type="file"
+                placeholder="entrer photo"
+                required
+              />
+            </div>
             <input
             name="signup"
               class="bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
@@ -138,7 +149,7 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
               </a>
             </h3>
           </div>
- 
+  
           <div
           id="third-party-auth"
           class="flex items-center justify-center mt-5 flex-wrap"

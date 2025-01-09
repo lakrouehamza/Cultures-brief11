@@ -37,7 +37,7 @@ if(isset($_POST['LireSuite'])){
     $article->remplir();
     $membre->wiews($article)  ;
 }
-if(isset($_POST['ajouteCommite'])  &&  isset($_POST['containerCommit'])){
+if(isset($_POST['ajouteCommite'])  &&  isset($_POST['containerCommit'])  && !empty(trim($_POST['containerCommit']))){
     $article =  new Article();
     $commit = new Commit();
     $id = $_POST['ajouteCommite'];
@@ -46,7 +46,11 @@ if(isset($_POST['ajouteCommite'])  &&  isset($_POST['containerCommit'])){
     $commit->setReply(0);
     $membre->commit($article,$commit);
     // $article->setId();
-    
+}
+if(isset($_POST['input_search']) && isset($_POST['search'])){
+    $value = $_POST['input_search'];
+    $stmtA = $membre->search($value);
+  
 }
 ?>
 <body>
@@ -56,10 +60,10 @@ if(isset($_POST['ajouteCommite'])  &&  isset($_POST['containerCommit'])){
                 Vous n'avez pas trouvé le composant que vous cherchiez ?
             </p>
 
-            <form action="/search">
+            <form action="" method="POST">
                 <label class="mx-auto mt-8 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300" for="search-bar">
-                    <input id="search-bar" placeholder="votre mot-clé ici" name="q" class="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white" required="">
-                    <button type="submit" class="w-full md:w-auto px-6 py-3 bg-black border-black text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-xl transition-all">
+                    <input id="search-bar" placeholder="votre mot-clé ici" name="input_search" class="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white" required="">
+                    <button type="submit" name="search" class="w-full md:w-auto px-6 py-3 bg-black border-black text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-xl transition-all">
                         <div class="flex items-center transition-all opacity-1">
                             <span class="text-sm font-semibold whitespace-nowrap truncate mx-auto">Rechercher</span>
                         </div>
@@ -174,10 +178,17 @@ if(isset($_POST['ajouteCommite'])  &&  isset($_POST['containerCommit'])){
                                     <div class="absolute inset-0 rounded-full shadow-inner"></div>
                                 </div>
                                 <div class="ml-4">
-                                    <h2 class="font-bold text-gray-800 text-lg"><?php echo  $romcommit['nom'].' '.$romcommit['prenom']; ?></h2>
-                                    <p class="text-gray-600"><?php  echo $romcommit['dataCommit'];  ?></p>
-                                    <p class="text-black-600"><?php  echo $romcommit['dataCommit'];  ?></p>
+                                    <h2 class="font-bold text-gray-800 text-lg">
+                                        <?php echo htmlspecialchars($romcommit['nom'] . ' ' . $romcommit['prenom'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </h2>
+                                    <p class="text-gray-600">
+                                        <?php echo htmlspecialchars($romcommit['dataCommit'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </p>
+                                    <p class="text-gray-600">
+                                        <?php echo htmlspecialchars($romcommit['contraire'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </p>
                                 </div>
+
                             </div>
                             <?php } ?>
                             <textarea class="w-full border-2 h-[40px]" name="containerCommit"></textarea>

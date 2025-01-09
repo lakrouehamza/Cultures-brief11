@@ -17,9 +17,13 @@ class Commit{
     public function getContraire(){
         return  $this->contraire;
     }
-    public function setContraire($contraire){
-        $this->contraire = $contraire;
+    public function setContraire($contraire) {
+        $contraire = trim($contraire); 
+        if (!empty($contraire)) {
+            $this->contraire = $contraire;
+        }
     }
+    
     public function getAuteur(){
         return  $this->auteur;
     }

@@ -1,11 +1,16 @@
 create database cultures
 use cultures;
-
 drop  table utilisateur;
 drop table admin;
 drop  table Members;
 drop table Auteur;
-
+drop table Categorie;
+drop table Article;
+drop table leslikes;
+drop table lesviews;
+drop table lescommits;
+drop trigger insertView ;
+drop  Trigger insetRole
 create table Utilisateur (
     id int primary key auto_increment,
     nom varchar(50) not null,
@@ -20,10 +25,12 @@ create table Admin (
 );
 create table Members (
     id int primary key ,
+    banni int default 0,
     constraint FK_member  FOREIGN KEY(id) references Utilisateur(id) on delete cascade on update cascade
 );
 create table Auteur (
     id int primary key ,
+    banni int default 0,
     constraint FK_auteur  FOREIGN KEY(id) references Utilisateur(id) on delete cascade on update cascade
 );
 create table Categorie (
@@ -38,7 +45,9 @@ create table Article (
     auteur int not null,
     titre varchar(100) not null,
     contraire text  not null,
+    image varchar(100) ,
     categor int not null,
+    dateArticle  DATETIME DEFAULT CURRENT_TIMESTAMP,
     constraint  FK_auteurArtcl  foreign key (auteur) references Auteur (id) on delete cascade on update cascade,
     constraint FK_typeArticle foreign key (categor) references Categorie(id) on delete cascade on update cascade
 );
@@ -66,12 +75,12 @@ create table lescommits(
     constraint FK_ArticleComit foreign key(article) references Article(id) on delete cascade on update cascade
 );
 
-create trigger insertView 
+CREATE  trigger  insertView 
 after insert on Article 
 for each row 
-insert into lesviews values(new.id);
 begin 
-end ;
+insert into lesviews values(new.id);
+end 
 //
 
 

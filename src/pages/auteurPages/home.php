@@ -53,14 +53,14 @@ $stmt =$auteur->listArticle();
                         <form method="POST" action="">
                             <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
                             <button name="edit"
-                                class="text-xs absolute top-0 w-[63px] right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                                class="text-xs absolute top-0 w-[100px] right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                                 Modifier
                             </button>
                         </form>
                         <form method="POST" action="">
                             <input type="text" value="<?php echo $row['id'] ;?>" name="id" class="hidden"/>
                             <button type="submit" name="delete"
-                                class="text-xs absolute top-10 w-[63px] right-0 bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                                class="text-xs absolute top-0 w-[100px] right-[30%] bg-red-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                                 Supprimer
                             </button>
                         </form>

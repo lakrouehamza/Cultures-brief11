@@ -1,6 +1,12 @@
 <?php 
 require_once("Utilisateur.php");
 class Member extends Utilisateur{
+    public function liste(){
+    $conn = new Connect();
+        $stmt = $conn->getConnect()->prepare("select  * from   Article ");
+        $stmt->execute();
+        return $stmt;
+    }
     public function listArticle($id){
         $conn = new Connect();
         if($id==0)
@@ -65,6 +71,21 @@ public function wiews($article){
         $stmt->bindParam(":article",$article);
         return $stmt->execute();
     }
+    public function  search($mot){
+        $connect  =  new Connect();
+        $stmt =  $connect->getConnect()->prepare("select  a.*  
+                                                  from  article a , Categorie c ,  Utilisateur auteur, Utilisateur licteur , lescommits m
+                                                  where a.categor = c.id  and a.auteur = auteur.id and a.id = m.article and m.auteur = licteur.id  
+                                                  and (a.contraire like :mot 
+                                                  or a.titre like :mot or  c.titre like :mot
+                                                   or auteur.nom like :mot or  auteur.prenom like :mot 
+                                                   or licteur.nom like :mot or  licteur.prenom like :mot 
+                                                   or m.contraire like :mot)");
+        $mot = '%'.$mot.'%';
+        $stmt->bindParam(":mot" ,$mot,PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt;
+    }
+    
 }  
-?>
-<!-- singl sglstate -->
+?> 
