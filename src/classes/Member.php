@@ -10,9 +10,9 @@ class Member extends Utilisateur{
     public function listArticle($id){
         $conn = new Connect();
         if($id==0)
-            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre from  Article a ,lesviews l where l.article = a.id and statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre ,count(m.id) as commit from  Article a ,lesviews l ,lescommits m  where m.article = a.id and l.article = a.id and statut ='confirme' order by dateArticle ");
         else{
-            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre from  Article a ,lesviews l   where   l.article = a.id and  categor = :id and  statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre ,count(m.id) as commit from  Article a ,lesviews l ,lescommits m  where m.article = a.id and l.article = a.id and  categor = :id and  statut ='confirme' order by dateArticle ");
             $stmt->bindParam(":id",$id);
         }
         $stmt->execute();
@@ -86,6 +86,9 @@ public function wiews($article){
         $stmt->execute();
         return $stmt;
     }
-    
+    // public function countCommit($article){
+    //     $connect =  new Connect();
+    //     $stmt = $connect->getConnect()->prepare("select count(*)  from article ")
+    // }
 }  
 ?> 
