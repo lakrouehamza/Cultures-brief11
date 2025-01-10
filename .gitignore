@@ -27,4 +27,4 @@ dataconnect
 src/PHPMailer
 test.php
 src/assets/images/
-src/classes/mail.php
+# src/classes/mail.php
