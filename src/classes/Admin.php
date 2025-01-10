@@ -77,15 +77,25 @@ public function deleteArticle($article){
 }
 public function listUtilisateur(){
     $connect =  new Connect();
-    $stmt = $connect->getConnect()->prepare("select *  from  utilisateur where role='membre' or role='auteur' ");
+    $stmt = $connect->getConnect()->prepare("select u.*  , case when u.id =  a .id then a.banni else m.banni  end as banni from  utilisateur u , Auteur a , Members m  where (u.id =  a .id  and   role='auteur' )  or ( u.id = m.id and  role='membre') ");
     $stmt->execute();
     return $stmt;
 }
-public function deleteUser($id){
+public function banniUser($user){
     $con = new Connect();
-    $stmt = $con->getConnect()->prepare("delete from  Utilisateur where id = :id");
-    $stmt->bindParam(":id",$id);
-    $stmt->execute();
+    $id = $user->getId();
+    if($user instanceof Auteur){
+        $stmt = $con->getConnect()->prepare("update   auteur set banni  = case when banni = 1 then 0 else 1 end where id = :id ; ");
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+        echo 'auteur';
+    }elseif($user instanceof Member) { 
+        echo 'membre';
+        $stmt = $con->getConnect()->prepare("update   members set banni = case when banni = 1 then 0 else 1 end where id = :id ; ");
+        $stmt->bindParam(":id",$id);
+        $stmt->execute();
+    }
+    
 }
 
 };

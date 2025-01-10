@@ -8,10 +8,27 @@
 <body>
 <?php require_once("header.php");
 require_once('./../../classes/Admin.php');
+require_once('./../../classes/Auteur.php');
+require_once('./../../classes/member.php');
 $admin  = new Admin();
 $stmt =  $admin->listUtilisateur();
-if (isset($_POST['deleteUser'])){
-    $admin->deleteUser($_POST['deleteUser']);
+if (isset($_POST['emailUser'])){
+    $user = new Utilisateur();
+    $user->setEmail($_POST['emailUser']);
+    $user->remplir();
+    if($user->getRole() == 'auteur'){
+        $auteur = new Auteur();
+        $auteur->afectation($user);
+        $admin->banniUser($auteur);
+        echo 's mhamed';
+    }     
+    else if($user->getRole() == 'membre'){
+        $member = new Member();
+        $member->afectation($user);
+        $admin->banniUser($member);
+        echo 's fatima';
+    }
+        
 }
 ?>
 <table class="min-w-full border-collapse border border-gray-300 rounded-lg shadow-md overflow-hidden">
@@ -34,8 +51,8 @@ if (isset($_POST['deleteUser'])){
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php   echo $row['role'] ?></td>
             <td class="px-6 py-4 whitespace-nowrap flex items-center space-x-2">
                  <form method="POST">
-                <button  name="deleteUser"  value="<?php echo $row['id'] ; ?>" class="px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 transition duration-150 ease-in-out">
-                    Supprimer
+                <button  name="emailUser"  value="<?php echo $row['email'] ; ?>" class="px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 transition duration-150 ease-in-out">
+                    <?php  echo $row['banni'] == 0 ? 'bannir':'exclure';  ?>
                 </button>
                  </form>
             </td>

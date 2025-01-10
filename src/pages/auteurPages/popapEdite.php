@@ -37,7 +37,6 @@ $cat->remplir();
                         Catégorie :
                         </label>
                         <select name="Editcategorie" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Categorie">
-                            <option value="<?php echo $article->getCategor() ;?>"><?php echo $cat->getTitre() ;?></option>
                             <?php 
                             while($row =$stmt->fetch(PDO::FETCH_ASSOC)){
                             ?>

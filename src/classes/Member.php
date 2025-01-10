@@ -1,6 +1,17 @@
 <?php 
 require_once("Utilisateur.php");
 class Member extends Utilisateur{
+    private ?int $banni;
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    public function getBanni(){
+        return $this->banni;
+    }
+    public function setBanni($banni){
+         $this->banni = $banni;
+    }
     public function liste(){
     $conn = new Connect();
         $stmt = $conn->getConnect()->prepare("select  * from   Article ");
@@ -10,9 +21,26 @@ class Member extends Utilisateur{
     public function listArticle($id){
         $conn = new Connect();
         if($id==0)
-            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre ,count(m.id) as commit from  Article a ,lesviews l ,lescommits m  where m.article = a.id and l.article = a.id and statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("
+        
+
+
+            SELECT a.*, l.nombre
+            FROM Article a
+            JOIN lesviews l ON a.id = l.article
+            WHERE a.statut = 'confirme'
+            GROUP BY a.id, l.nombre
+            ORDER BY a.dateArticle;
+
+");
         else{
-            $stmt = $conn->getConnect()->prepare("select a.* , l.nombre ,count(m.id) as commit from  Article a ,lesviews l ,lescommits m  where m.article = a.id and l.article = a.id and  categor = :id and  statut ='confirme' order by dateArticle ");
+            $stmt = $conn->getConnect()->prepare("
+             SELECT a.*, l.nombre, as commit
+FROM Article a
+JOIN lesviews l ON a.id = l.article 
+ where m.article = a.id and l.article = a.id and  categorie = :id and  statut ='confirme' 
+GROUP BY a.id, l.nombre
+ORDER BY a.dateArticle; ");
             $stmt->bindParam(":id",$id);
         }
         $stmt->execute();
@@ -64,8 +92,8 @@ public function wiews($article){
         $article = $article->getId() ;
         $commiti = $commit->getContraire() ;
         $repy = $commit->getReply() ;
-        $stmt =  $conn->getConnect()->prepare("insert into lescommits (contraire,auteur,reply,article) values ( :contraire , :auteur , :reply , :article ) ");
-        $stmt->bindParam(":contraire",$commiti);
+        $stmt =  $conn->getConnect()->prepare("insert into lescomment (contenu,auteur,reply,article) values ( :contenu , :auteur , :reply , :article ) ");
+        $stmt->bindParam(":contenu",$commiti);
         $stmt->bindParam(":auteur",$id);
         $stmt->bindParam(":reply",$repy);
         $stmt->bindParam(":article",$article);
@@ -74,13 +102,13 @@ public function wiews($article){
     public function  search($mot){
         $connect  =  new Connect();
         $stmt =  $connect->getConnect()->prepare("select  a.*  
-                                                  from  article a , Categorie c ,  Utilisateur auteur, Utilisateur licteur , lescommits m
-                                                  where a.categor = c.id  and a.auteur = auteur.id and a.id = m.article and m.auteur = licteur.id  
-                                                  and (a.contraire like :mot 
+                                                  from  article a , Categorie c ,  Utilisateur auteur, Utilisateur licteur , lescomment m
+                                                  where a.categorie = c.id  and a.auteur = auteur.id and a.id = m.article and m.auteur = licteur.id  
+                                                  and (a.contenu like :mot 
                                                   or a.titre like :mot or  c.titre like :mot
                                                    or auteur.nom like :mot or  auteur.prenom like :mot 
                                                    or licteur.nom like :mot or  licteur.prenom like :mot 
-                                                   or m.contraire like :mot)");
+                                                   or m.contenu like :mot)");
         $mot = '%'.$mot.'%';
         $stmt->bindParam(":mot" ,$mot,PDO::PARAM_STR);
         $stmt->execute();

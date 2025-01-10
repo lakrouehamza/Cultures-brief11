@@ -6,7 +6,8 @@ private ?int $auteur;
 private ?String $titre;
 private ?int $categor;
 private ?String $container;
-public function __construct($id=0,$statut="encours",$auteur=0,$titre='',$categor=0, $container='')
+private ?String $image;
+public function __construct($id=0,$statut="encours",$auteur=0,$titre='',$image='',$categor=0, $container='')
 {
     $this->id=$id;
     $this->statut=$statut;
@@ -14,6 +15,7 @@ public function __construct($id=0,$statut="encours",$auteur=0,$titre='',$categor
     $this->titre=$titre;
     $this->categor=$categor;
     $this->container=$container;
+    $this->image = $image;
 }
 public function setId($id){
     $this->id =$id;
@@ -51,6 +53,12 @@ public function getContainer(){
 public function getId(){
     return $this->id ;
 }
+public function setImage($image){
+    $this->image = $image;
+}
+public function getImage(){
+    return $this->image;
+}
 public function remplir(){
     $id =  $this->getId();
     $conn = new Connect();
@@ -61,8 +69,8 @@ public function remplir(){
         $this->setTitre($row['titre']);
         $this->setStatut($row['statut']);
         $this->setAuteur($row['auteur']);
-        $this->setContainer($row['contraire']);
-        $this->setCategor($row['categor']);
+        $this->setContainer($row['contenu']);
+        $this->setCategor($row['categorie']);
         return true ;
     }
     return false;

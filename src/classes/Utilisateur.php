@@ -7,7 +7,8 @@ class Utilisateur{
     protected ?String $prenom;
     protected ?String $password;
     protected ?String $role;
-    public function __construct($id=0,$email='',$nom='',$prenom='',$password='',$role="member")
+    protected ?String $photo;
+    public function __construct($id=0,$email='',$nom='',$prenom='',$password='',$role="member",$photo ='')
     {
         $this->id=$id;
         $this->email=$email;
@@ -15,9 +16,16 @@ class Utilisateur{
         $this->prenom=$prenom;
         $this->password=$password;
         $this->role=$role;
+        $this->photo=$photo;
     }
     public function setId($id){
         $this->id=$id;
+    }
+    public function setPhoto($photo){
+        $this->photo=$photo;
+    }
+    public function getPhoto(){
+        return $this->photo;;
     }
     public function setEmail($email){
         $this->email=$email;
@@ -52,6 +60,14 @@ class Utilisateur{
     public function getRole(){
         return $this->role;
     }
+    public function afectation( $user){
+        $this->setId($user->getId());
+        $this->setPrenom($user->getPrenom());
+        $this->setNom($user->getNom());
+        // $this->setPassword($user->getPassword());
+        $this->setEmail($user->getEmail());
+        // $this->setRole($user->getRole());
+    }
     public function setSession(){
         session_start();
         $_SESSION['email']  = $this->getEmail();
@@ -76,8 +92,7 @@ class Utilisateur{
                     exit;
                 }
                 elseif($row['role']=="membre"){ 
-
-                    // $this->tomessage('hamzalakroune8@gmail.com');
+ 
                     header('Location: ../memberPages/home.php');
                     exit;
                 }
@@ -89,14 +104,7 @@ class Utilisateur{
         }else echo "in email";
     }
 
-    public function tomessage($to){
-            $message = "bienvenue invite à publier des articles.\r\n";
-
-            $message = wordwrap($message, 70, "\r\n");
-
-            // Envoi du mail
-            echo mail($to, 'Contexte Cultures Partagées', $message) ? "Email envoyé avec succès." : "Erreur lors de l'envoi de l'email.";
-    }
+   
     public function signUp(){
         $connect = new Connect();
         $stmt = $connect->getConnect()->prepare("select *  from  utilisateur where email = :email");
@@ -108,14 +116,16 @@ class Utilisateur{
             $prenom = $this->getPrenom();
             $email = $this->getEmail();
             $role = $this->getRole();
+            $photo = $this->getPhoto();
             $password = $this->getPassword();
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,password,role) values (:nom,:prenom,:email,:password,:role)");
-            $stmt->bindParam(":nom", $nom);
-            $stmt->bindParam(":prenom", $prenom);
-            $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":password", $password);
-            $stmt->bindParam(":role", $role);
+            $stmt =$connect->getConnect()->prepare("insert into utilisateur (nom,prenom,email,password,role,photo) values ( :nom , :prenom , :email , :password , :role , :photo)");
+            $stmt->bindParam(":nom", $nom,PDO::PARAM_STR);
+            $stmt->bindParam(":prenom", $prenom ,PDO::PARAM_STR);
+            $stmt->bindParam(":email", $email ,PDO::PARAM_STR);
+            $stmt->bindParam(":password", $password ,PDO::PARAM_STR);
+            $stmt->bindParam(":role", $role ,PDO::PARAM_STR);
+            $stmt->bindParam(":photo", $photo ,PDO::PARAM_STR);
             $stmt->execute();
             header("Location: login.php");
             exit;
@@ -134,6 +144,7 @@ class Utilisateur{
             $this->setId($row['id']);
             $this->setRole($row['role']);
             $this->setPassword($row['password']);
+            $this->setPhoto($row['photo']);
             return true ;
         }
         return false;

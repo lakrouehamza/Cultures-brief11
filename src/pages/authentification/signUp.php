@@ -2,13 +2,20 @@
 require_once("../../assets/functions/authentification.php");
 authentification();
 require_once("../../classes/Utilisateur.php");
-if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['password'])&& isset($_POST['verifyPassword']) && isset($_POST['role'])){
+if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['password'])&& isset($_POST['verifyPassword']) && isset($_POST['role']) && isset($_FILES['photo'])   ){
    $user = new Utilisateur();
+   
+   $upload_folder = "../../assets/images/";  //
+   $file_name = basename($_FILES['photo']['name']);
+   $image_path = $upload_folder . $file_name;
+   move_uploaded_file($_FILES['photo']['tmp_name'], $image_path);
+
    $user->setNom(htmlspecialchars($_POST['nom'],ENT_COMPAT)); 
    $user->setPrenom(htmlspecialchars($_POST['prenom'],ENT_COMPAT)); 
    $user->setRole(htmlspecialchars($_POST['role'],ENT_COMPAT)); 
    $user->setEmail(htmlspecialchars($_POST['email'],ENT_COMPAT)); 
    $user->setPassword(htmlspecialchars($_POST['password'],ENT_COMPAT)); 
+   $user->setPhoto($image_path);
    if($_POST['password'] == $_POST['verifyPassword']){
     $user->signUp(); 
    }
@@ -47,7 +54,7 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
           <h1 class="pt-8 pb-6 font-bold text-5xl dark:text-gray-400 text-center cursor-default">
             INSCRIPTION
           </h1>
-          <form action="" method="POST" class="space-y-4" >
+          <form action="" method="POST" class="space-y-4" enctype="multipart/form-data"  >
             <div>
               <label for="nom" class="mb-2 dark:text-gray-400 text-lg">Nom</label>
               <input
@@ -116,10 +123,10 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
               </select>
             </div>
             <div>
-              <label for="role" class="mb-2 dark:text-gray-400 text-lg">profile</label>
+              <label for="photo" class="mb-2 dark:text-gray-400 text-lg">profile</label>
               <input
-                id="image"
-                name="image"
+                id="photo"
+                name="photo"
                 class="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
                 type="file"
                 placeholder="entrer photo"

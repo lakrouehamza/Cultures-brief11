@@ -110,7 +110,7 @@ if(isset($_POST['input_search']) && isset($_POST['search'])){
             <div class="relative">
                 <a href="#">
                     <img class="w-full"
-                         src="https://images.pexels.com/photos/61180/pexels-photo-61180.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500"
+                         src="<?php echo $row['image'] ; ?>"
                          alt="Sunset in the mountains">
                 </a>
                 <div>
@@ -130,9 +130,9 @@ if(isset($_POST['input_search']) && isset($_POST['search'])){
                     <div class="max-w-md mx-auto mt-0 contianerbtn">
                         <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
                         <p class="leading-relaxed">
-                            <?php echo substr($row['contraire'], 0, 100); ?>
+                            <?php echo substr($row['contenu'], 0, 100); ?>
                             <span class="hidden btn" id="more-text">
-                                <?php echo substr($row['contraire'], 100); ?>
+                                <?php echo substr($row['contenu'], 100); ?>
                             </span>
                         </p>
                         <form action="" method="post">
@@ -159,7 +159,7 @@ if(isset($_POST['input_search']) && isset($_POST['search'])){
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
                         </svg>
-                        <span class="ml-1"><?php echo  $row['commit'] ; ?> Commentaires</span>
+                        <span class="ml-1"><?php /*echo  $row['commit'] ;*/ ?> Commentaires</span>
                     </button>
                 </div>
 
@@ -174,7 +174,8 @@ if(isset($_POST['input_search']) && isset($_POST['search'])){
                             ?>
                             <div class="flex items-center">
                                 <div class="relative">
-                                    <img class="h-16 w-16 rounded-full object-cover" src="https://randomuser.me/api/portraits/women/87.jpg" alt="Avatar">
+                                    <?php   ?>
+                                    <img class="h-16 w-16 rounded-full object-cover" src="<?php echo $romcommit['photo'];?>" alt="Avatar">
                                     <div class="absolute inset-0 rounded-full shadow-inner"></div>
                                 </div>
                                 <div class="ml-4">
@@ -185,7 +186,7 @@ if(isset($_POST['input_search']) && isset($_POST['search'])){
                                         <?php echo htmlspecialchars($romcommit['dataCommit'], ENT_QUOTES, 'UTF-8'); ?>
                                     </p>
                                     <p class="text-gray-600">
-                                        <?php echo htmlspecialchars($romcommit['contraire'], ENT_QUOTES, 'UTF-8'); ?>
+                                        <?php echo htmlspecialchars($romcommit['contenu'], ENT_QUOTES, 'UTF-8'); ?>
                                     </p>
                                 </div>
 

@@ -24,3 +24,7 @@ card.php
 .firebaserc
 firebase.json
 dataconnect
+src/PHPMailer
+test.php
+src/assets/images/
+src/classes/mail.php

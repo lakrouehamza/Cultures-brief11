@@ -36,6 +36,12 @@ $stmt = $auteur->selectCategorie();
                         <input name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Entrez votre titre">
                     </div>
                     <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="image">
+                            Titre :
+                        </label>
+                        <input name="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" type="file" placeholder="Entrez votre image">
+                    </div>
+                    <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="Categorie">
                         Catégorie :
                         </label>

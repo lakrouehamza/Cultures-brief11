@@ -17,6 +17,7 @@ if(isset($_POST['containe']) && isset($_POST['title'])&& isset($_POST['categorie
     $article->setTitre($_POST['title']);
     $article->setContainer($_POST['containe']);
     $article->setCategor($_POST['categorie']);
+    $article->setImage($_POST['categorie']);
      $auteur->ecrireArticle($article);
     //  echo $_POST['title'];
 }
@@ -68,9 +69,9 @@ $stmt =$auteur->listArticle();
                     <div class="px-6 py-4 mb-auto">
                     <div class="max-w-md mx-auto mt-0  contianerbtn">
                         <h1 class="py-2 font-bold text-xl"><?php echo strtoupper($row['titre']); ?></h1>
-                        <p class="leading-relaxed"> <?php echo substr($row['contraire'],0,100); ?>
+                        <p class="leading-relaxed"> <?php echo substr($row['contenu'],0,100); ?>
                             <span class="hidden  btn" id="more-text">
-                            <?php echo substr($row['contraire'],101,strlen($row['contraire'])-100); ?>                            
+                            <?php echo substr($row['contenu'],101,strlen($row['contenu'])-100); ?>                            
                             </span>
                         </p>
                         <button  class="mt-4 text-blue-500 focus:outline-none  toggle-btn "   >Lire la suite</button>

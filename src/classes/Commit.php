@@ -39,7 +39,7 @@ class Commit{
     public  function rempler(){
         $conn = new Connect();
         $id = $this->getId();
-        $stmt =  $conn->getConnect()->prepare("select * from  lescommits where id = :id");
+        $stmt =  $conn->getConnect()->prepare("select c.* from  lescomment where id = :id");
         $stmt->bindParam(":id",$id);
         if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $this->setContraire($row['contraire']);
@@ -51,8 +51,8 @@ class Commit{
     }
     public function selectCommit($id){
         $conn = new Connect();
-        $stmt = $conn->getConnect()->prepare("          select c.* ,a.nom ,a.prenom  
-                                                        from lescommits c ,utilisateur a 
+        $stmt = $conn->getConnect()->prepare("          select c.* ,a.nom ,a.prenom ,a.photo  
+                                                        from lescomment c ,utilisateur a 
                                                         where c.auteur = a.id and c.article = :id");
         $stmt->bindParam(":id",$id);
         $stmt->execute();

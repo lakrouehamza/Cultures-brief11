@@ -11,7 +11,9 @@ authentificationMember();
         </a>
         <div class="flex items-center lg:order-2">
             <div class="hidden mt-2 mr-4 sm:inline-block">
-                <span></span>
+        <a href="profil.php">    <img class="object-cover w-20 h-20 mt-3 mr-3 rounded-full" src="https://www.fakepersongenerator.com/Face/male/male20171086011485596.jpg" >
+        </a>
+    
             </div>
             <form  method="POST" loction="">
                 <button href="https://themesberg.com/product/tailwind-css/landing-page" type="submit" name="logout"
