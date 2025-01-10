@@ -186,3 +186,103 @@ select  c.id ,c.titre ,count(a.id) as nombreTotal
 from  categorie c , article a 
 where c.id = a.categorie 
 group by c.id ; 
+
+select  u.*  
+from utilisateur u , article a
+where  c.id = a.auteur  
+group by a.id 
+order by count(a.titre) limit 10;
+ 
+
+ SELECT AVG(total_articles) AS moyenne_articles
+FROM (
+    SELECT COUNT(a.id) AS total_articles
+    FROM categorie c
+    LEFT JOIN article a ON c.id = a.categorie_id
+    GROUP BY c.id
+) AS sous_requete;
+
+CREATE VIEW derniers_articles AS
+SELECT a.id, a.titre, a.date_publication, c.nom AS categorie
+FROM article a
+JOIN categorie c ON a.categorie_id = c.id
+WHERE a.date_publication >= CURDATE() - INTERVAL 30 DAY
+ORDER BY a.date_publication DESC;
+
+
+SELECT c.nom AS categorie
+FROM categorie c
+LEFT JOIN article a ON c.id = a.categorie_id
+WHERE a.id IS NULL;
+
+CREATE VIEW articles_plus_likes AS
+SELECT 
+    a.titre AS titre_article,
+    c.nom AS categorie,
+    COUNT(l.id) AS nombre_likes
+FROM 
+    article a
+JOIN 
+    categorie c ON a.categorie_id = c.id
+LEFT JOIN 
+    likes l ON a.id = l.article_id
+GROUP BY 
+    a.id, c.nom
+ORDER BY 
+    nombre_likes DESC;
+
+
+CREATE VIEW articles_plus_likes AS
+SELECT 
+    a.titre AS titre_article,
+    c.nom AS categorie,
+    COUNT(l.id) AS nombre_likes
+FROM 
+    article a
+JOIN 
+    categorie c ON a.categorie_id = c.id
+LEFT JOIN 
+    likes l ON a.id = l.article_id
+GROUP BY 
+    a.id, c.nom
+ORDER BY 
+    nombre_likes DESC;
+
+
+CREATE PROCEDURE bannir_utilisateur(IN utilisateur_id INT)
+BEGIN
+    UPDATE utilisateur
+    SET is_active = 0
+    WHERE id = utilisateur_id;
+
+    INSERT INTO log_admin_actions (action, utilisateur_id, date_action)
+    VALUES ('Banni par admin', utilisateur_id, NOW());
+END 
+
+DELIMITER //
+
+CREATE PROCEDURE bannir_utilisateur(IN utilisateur_id INT)
+BEGIN
+    UPDATE utilisateur
+    SET is_active = 0
+    WHERE id = utilisateur_id;
+
+    INSERT INTO log_admin_actions (action, utilisateur_id, date_action)
+    VALUES ('Banni par admin', utilisateur_id, NOW());
+END //
+
+SELECT 
+    t.nom AS tag,
+    COUNT(at.article_id) AS nombre_associations
+FROM 
+    tags t
+JOIN 
+    article_tags at ON t.id = at.tag_id
+JOIN 
+    article a ON at.article_id = a.id
+WHERE 
+    a.date_publication >= CURDATE() - INTERVAL 30 DAY
+GROUP BY 
+    t.id, t.nom
+ORDER BY 
+    nombre_associations DESC;
